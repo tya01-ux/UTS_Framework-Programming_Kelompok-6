@@ -13,19 +13,24 @@ import { Member } from '../members/entities/member.entity';
 import { CreateProjectMemberDto } from './dto/create-project-member.dto';
 import { UpdateProjectMemberDto } from './dto/update-project-member.dto';
 
+// Menandai class sebagai Injectable agar bisa digunakan oleh controller
 @Injectable()
 export class ProjectMembersService {
   constructor(
+    // Repository untuk mengelola data relasi project dan member
     @InjectRepository(ProjectMember)
     private readonly projectMemberRepository: Repository<ProjectMember>,
-
+    
+    // Repository untuk mengakses data project
     @InjectRepository(Project)
     private readonly projectRepository: Repository<Project>,
-
+    
+    // Repository untuk mengakses data member
     @InjectRepository(Member)
     private readonly memberRepository: Repository<Member>,
   ) {}
 
+    // Fungsi untuk menambahkan member ke dalam project
   async create(dto: CreateProjectMemberDto) {
     const project = await this.projectRepository.findOneBy({
       id: dto.project_id,
@@ -43,6 +48,7 @@ export class ProjectMembersService {
       throw new NotFoundException('Member tidak ditemukan');
     }
 
+    // Memeriksa apakah member sudah terdaftar pada project yang sama
     const existing = await this.projectMemberRepository.findOneBy({
       project_id: dto.project_id,
       member_id: dto.member_id,

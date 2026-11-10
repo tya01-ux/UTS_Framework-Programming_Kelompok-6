@@ -1,0 +1,18 @@
+$kind: http-request
+url: "{{baseUrl}}/members/{{memberId}}"
+method: PATCH
+headers:
+  Content-Type: application/json
+body:
+  type: json
+  content: |-
+    {
+      "name": "Halim Wiko Updated"
+    }
+scripts:
+  - type: afterResponse
+    code: |-
+      pm.test("Status 200", function () { pm.response.to.have.status(200); });
+      pm.test("Nama berubah", function(){ pm.expect(pm.response.json().name).to.eql("Halim Wiko Updated"); });
+    language: text/javascript
+order: 4000

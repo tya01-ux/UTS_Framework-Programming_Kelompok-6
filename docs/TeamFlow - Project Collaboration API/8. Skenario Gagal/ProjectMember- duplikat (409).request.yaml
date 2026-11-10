@@ -1,0 +1,19 @@
+$kind: http-request
+name: "ProjectMember: duplikat (409)"
+url: "{{baseUrl}}/project-members"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: json
+  content: |-
+    {
+      "project_id": {{projectId}},
+      "member_id": {{memberId}},
+      "role": "member"
+    }
+scripts:
+  - type: afterResponse
+    code: pm.test("Status 409", function () { pm.response.to.have.status(409); });
+    language: text/javascript
+order: 11000

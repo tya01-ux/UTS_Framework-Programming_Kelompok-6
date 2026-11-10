@@ -1,0 +1,20 @@
+$kind: http-request
+name: "Member: field tidak dikenal (400)"
+url: "{{baseUrl}}/members"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: json
+  content: |-
+    {
+      "name": "Budi",
+      "email": "budi@mail.com",
+      "password": "password123",
+      "role": "admin"
+    }
+scripts:
+  - type: afterResponse
+    code: pm.test("Status 400", function () { pm.response.to.have.status(400); });
+    language: text/javascript
+order: 3000

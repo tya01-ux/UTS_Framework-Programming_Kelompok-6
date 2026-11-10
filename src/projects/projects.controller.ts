@@ -8,11 +8,7 @@ import {
   Patch,
   Post,
 } from '@nestjs/common';
-import {
-  ApiOperation,
-  ApiResponse,
-  ApiTags,
-} from '@nestjs/swagger';
+import { ApiOperation, ApiTags } from '@nestjs/swagger';
 
 import { ProjectsService } from './projects.service';
 import { CreateProjectDto } from './dto/create-project.dto';
@@ -25,7 +21,6 @@ export class ProjectsController {
 
   @Post()
   @ApiOperation({ summary: 'Membuat project baru' })
-  @ApiResponse({ status: 201, description: 'Project berhasil dibuat' })
   create(@Body() dto: CreateProjectDto) {
     return this.projectsService.create(dto);
   }

@@ -1,0 +1,19 @@
+$kind: http-request
+name: "ProjectMember: role salah (400)"
+url: "{{baseUrl}}/project-members"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: json
+  content: |-
+    {
+      "project_id": {{projectId}},
+      "member_id": {{memberId}},
+      "role": "admin"
+    }
+scripts:
+  - type: afterResponse
+    code: pm.test("Status 400", function () { pm.response.to.have.status(400); });
+    language: text/javascript
+order: 14000

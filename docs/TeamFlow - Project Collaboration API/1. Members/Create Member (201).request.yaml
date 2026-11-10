@@ -1,0 +1,25 @@
+$kind: http-request
+url: "{{baseUrl}}/members"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: json
+  content: |-
+    {
+      "name": "Halim Wiko",
+      "email": "{{email}}",
+      "password": "password123",
+      "phone": "081234567890"
+    }
+scripts:
+  - type: beforeRequest
+    code: pm.collectionVariables.set("email", "user" + Date.now() + "@mail.com");
+    language: text/javascript
+  - type: afterResponse
+    code: |-
+      pm.test("Status 201", function () { pm.response.to.have.status(201); });
+      pm.collectionVariables.set("memberId", pm.response.json().id);
+      pm.test("Password tidak ikut response", function(){ pm.expect(pm.response.json()).to.not.have.property("password"); });
+    language: text/javascript
+order: 1000

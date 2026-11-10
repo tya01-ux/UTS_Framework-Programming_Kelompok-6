@@ -1,0 +1,20 @@
+$kind: http-request
+name: "Task: project tidak ada (404)"
+url: "{{baseUrl}}/tasks"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: json
+  content: |-
+    {
+      "project_id": 999999,
+      "title": "X",
+      "status": "todo",
+      "priority": "low"
+    }
+scripts:
+  - type: afterResponse
+    code: pm.test("Status 404", function () { pm.response.to.have.status(404); });
+    language: text/javascript
+order: 15000

@@ -1,0 +1,4 @@
+$kind: collection
+description: Jalankan lewat Collection Runner secara berurutan (folder 1 sampai 9).
+variables:
+  baseUrl: http://localhost:3001/api

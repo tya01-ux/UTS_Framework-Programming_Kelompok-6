@@ -1,0 +1,23 @@
+$kind: http-request
+url: "{{baseUrl}}/tasks"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: json
+  content: |-
+    {
+      "project_id": {{projectId}},
+      "title": "Membuat halaman login",
+      "description": "Membuat tampilan login",
+      "status": "todo",
+      "priority": "high",
+      "due_date": "2026-12-01"
+    }
+scripts:
+  - type: afterResponse
+    code: |-
+      pm.test("Status 201", function () { pm.response.to.have.status(201); });
+      pm.collectionVariables.set("taskId", pm.response.json().id);
+    language: text/javascript
+order: 1000

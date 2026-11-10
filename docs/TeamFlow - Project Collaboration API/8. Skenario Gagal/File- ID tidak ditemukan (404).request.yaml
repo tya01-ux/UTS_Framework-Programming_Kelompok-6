@@ -1,0 +1,9 @@
+$kind: http-request
+name: "File: ID tidak ditemukan (404)"
+url: "{{baseUrl}}/files/999999"
+method: DELETE
+scripts:
+  - type: afterResponse
+    code: pm.test("Status 404", function () { pm.response.to.have.status(404); });
+    language: text/javascript
+order: 22000

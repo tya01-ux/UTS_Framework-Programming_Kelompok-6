@@ -1,10 +1,11 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import {
   IsDateString,
   IsEnum,
   IsNotEmpty,
   IsOptional,
   IsString,
+  MaxLength,
 } from 'class-validator';
 import { ProjectStatus } from '../entities/project.entity';
 
@@ -12,11 +13,12 @@ export class CreateProjectDto {
   @ApiProperty({ example: 'TeamFlow Website' })
   @IsString()
   @IsNotEmpty()
+  @MaxLength(150)
   name: string;
 
-  @ApiProperty({ example: 'Project kolaborasi mahasiswa' })
-  @IsString()
+  @ApiPropertyOptional({ example: 'Project kolaborasi mahasiswa' })
   @IsOptional()
+  @IsString()
   description?: string;
 
   @ApiProperty({ enum: ProjectStatus, example: ProjectStatus.ACTIVE })
@@ -27,8 +29,8 @@ export class CreateProjectDto {
   @IsDateString()
   start_date: string;
 
-  @ApiProperty({ example: '2026-12-30' })
-  @IsDateString()
+  @ApiPropertyOptional({ example: '2026-12-30' })
   @IsOptional()
+  @IsDateString()
   end_date?: string;
 }

@@ -1,0 +1,20 @@
+$kind: http-request
+url: "{{baseUrl}}/project-members"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: json
+  content: |-
+    {
+      "project_id": {{projectId}},
+      "member_id": {{memberId}},
+      "role": "manager"
+    }
+scripts:
+  - type: afterResponse
+    code: |-
+      pm.test("Status 201", function () { pm.response.to.have.status(201); });
+      pm.collectionVariables.set("projectMemberId", pm.response.json().id);
+    language: text/javascript
+order: 1000

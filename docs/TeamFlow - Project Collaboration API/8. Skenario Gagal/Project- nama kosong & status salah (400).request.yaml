@@ -1,0 +1,19 @@
+$kind: http-request
+name: "Project: nama kosong & status salah (400)"
+url: "{{baseUrl}}/projects"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: json
+  content: |-
+    {
+      "name": "",
+      "status": "selesai",
+      "start_date": "2026-11-09"
+    }
+scripts:
+  - type: afterResponse
+    code: pm.test("Status 400", function () { pm.response.to.have.status(400); });
+    language: text/javascript
+order: 7000

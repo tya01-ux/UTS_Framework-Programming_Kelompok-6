@@ -1,0 +1,12 @@
+$kind: http-request
+name: File -> project & member
+url: "{{baseUrl}}/files/{{fileId}}"
+method: GET
+scripts:
+  - type: afterResponse
+    code: |-
+      pm.test("Status 200", function () { pm.response.to.have.status(200); });
+      const f = pm.response.json();
+      pm.test("Punya project dan member", function(){ pm.expect(f).to.have.property("project"); pm.expect(f).to.have.property("member"); });
+    language: text/javascript
+order: 4000

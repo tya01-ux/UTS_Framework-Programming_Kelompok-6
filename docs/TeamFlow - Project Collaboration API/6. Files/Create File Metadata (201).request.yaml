@@ -1,0 +1,23 @@
+$kind: http-request
+url: "{{baseUrl}}/files"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: json
+  content: |-
+    {
+      "project_id": {{projectId}},
+      "member_id": {{memberId}},
+      "name": "laporan_project.pdf",
+      "type": "application/pdf",
+      "size": "204800",
+      "path": "uploads/laporan_project.pdf"
+    }
+scripts:
+  - type: afterResponse
+    code: |-
+      pm.test("Status 201", function () { pm.response.to.have.status(201); });
+      pm.collectionVariables.set("fileId", pm.response.json().id);
+    language: text/javascript
+order: 1000

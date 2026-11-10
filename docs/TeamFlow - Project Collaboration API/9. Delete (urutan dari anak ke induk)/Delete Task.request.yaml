@@ -1,0 +1,10 @@
+$kind: http-request
+url: "{{baseUrl}}/tasks/{{taskId}}"
+method: DELETE
+scripts:
+  - type: afterResponse
+    code: |-
+      pm.test("Status 200", function () { pm.response.to.have.status(200); });
+      pm.test("Ada pesan", function(){ pm.expect(pm.response.json()).to.have.property("message"); });
+    language: text/javascript
+order: 3000

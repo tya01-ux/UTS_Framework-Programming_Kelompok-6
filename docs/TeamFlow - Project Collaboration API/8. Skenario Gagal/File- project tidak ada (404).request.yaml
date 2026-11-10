@@ -1,0 +1,22 @@
+$kind: http-request
+name: "File: project tidak ada (404)"
+url: "{{baseUrl}}/files"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: json
+  content: |-
+    {
+      "project_id": 999999,
+      "member_id": {{memberId}},
+      "name": "a.pdf",
+      "type": "application/pdf",
+      "size": "100",
+      "path": "uploads/a.pdf"
+    }
+scripts:
+  - type: afterResponse
+    code: pm.test("Status 404", function () { pm.response.to.have.status(404); });
+    language: text/javascript
+order: 20000

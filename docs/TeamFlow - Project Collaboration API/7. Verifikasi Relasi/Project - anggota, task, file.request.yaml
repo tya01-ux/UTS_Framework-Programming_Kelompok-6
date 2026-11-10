@@ -1,0 +1,15 @@
+$kind: http-request
+name: Project -> anggota, task, file
+url: "{{baseUrl}}/projects/{{projectId}}"
+method: GET
+scripts:
+  - type: afterResponse
+    code: |-
+      pm.test("Status 200", function () { pm.response.to.have.status(200); });
+      const p = pm.response.json();
+      pm.test("Punya projectMembers", function(){ pm.expect(p.projectMembers.length).to.be.above(0); });
+      pm.test("projectMembers memuat data member", function(){ pm.expect(p.projectMembers[0]).to.have.property("member"); });
+      pm.test("Punya tasks", function(){ pm.expect(p.tasks.length).to.be.above(0); });
+      pm.test("Punya files", function(){ pm.expect(p.files.length).to.be.above(0); });
+    language: text/javascript
+order: 1000

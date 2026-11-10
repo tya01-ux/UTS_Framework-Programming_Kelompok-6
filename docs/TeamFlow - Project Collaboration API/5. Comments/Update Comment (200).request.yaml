@@ -1,0 +1,18 @@
+$kind: http-request
+url: "{{baseUrl}}/comments/{{commentId}}"
+method: PATCH
+headers:
+  Content-Type: application/json
+body:
+  type: json
+  content: |-
+    {
+      "content": "Komentar diperbarui."
+    }
+scripts:
+  - type: afterResponse
+    code: |-
+      pm.test("Status 200", function () { pm.response.to.have.status(200); });
+      pm.test("Konten berubah", function(){ pm.expect(pm.response.json().content).to.eql("Komentar diperbarui."); });
+    language: text/javascript
+order: 4000

@@ -1,4 +1,4 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import {
   IsDateString,
   IsEnum,
@@ -6,11 +6,9 @@ import {
   IsNotEmpty,
   IsOptional,
   IsString,
+  MaxLength,
 } from 'class-validator';
-import {
-  TaskPriority,
-  TaskStatus,
-} from '../entities/task.entity';
+import { TaskPriority, TaskStatus } from '../entities/task.entity';
 
 export class CreateTaskDto {
   @ApiProperty({ example: 1 })
@@ -20,9 +18,10 @@ export class CreateTaskDto {
   @ApiProperty({ example: 'Membuat halaman login' })
   @IsString()
   @IsNotEmpty()
+  @MaxLength(150)
   title: string;
 
-  @ApiProperty({ example: 'Membuat tampilan login menggunakan React' })
+  @ApiPropertyOptional({ example: 'Membuat tampilan login menggunakan React' })
   @IsOptional()
   @IsString()
   description?: string;
@@ -35,7 +34,7 @@ export class CreateTaskDto {
   @IsEnum(TaskPriority)
   priority: TaskPriority;
 
-  @ApiProperty({ example: '2026-12-01', required: false })
+  @ApiPropertyOptional({ example: '2026-12-01' })
   @IsOptional()
   @IsDateString()
   due_date?: string;

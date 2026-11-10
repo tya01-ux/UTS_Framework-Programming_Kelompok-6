@@ -1,0 +1,13 @@
+$kind: http-request
+name: Task -> project & komentar
+url: "{{baseUrl}}/tasks/{{taskId}}"
+method: GET
+scripts:
+  - type: afterResponse
+    code: |-
+      pm.test("Status 200", function () { pm.response.to.have.status(200); });
+      const k = pm.response.json();
+      pm.test("Punya project", function(){ pm.expect(k.project.id).to.eql(pm.collectionVariables.get("projectId")); });
+      pm.test("Punya comments", function(){ pm.expect(k.comments.length).to.be.above(0); });
+    language: text/javascript
+order: 2000

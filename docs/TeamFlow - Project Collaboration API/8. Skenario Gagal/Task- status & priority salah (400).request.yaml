@@ -1,0 +1,20 @@
+$kind: http-request
+name: "Task: status & priority salah (400)"
+url: "{{baseUrl}}/tasks"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: json
+  content: |-
+    {
+      "project_id": {{projectId}},
+      "title": "X",
+      "status": "selesai",
+      "priority": "urgent"
+    }
+scripts:
+  - type: afterResponse
+    code: pm.test("Status 400", function () { pm.response.to.have.status(400); });
+    language: text/javascript
+order: 16000

@@ -1,0 +1,19 @@
+$kind: http-request
+name: "Member: email duplikat (409)"
+url: "{{baseUrl}}/members"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: json
+  content: |-
+    {
+      "name": "Duplikat",
+      "email": "{{email}}",
+      "password": "password123"
+    }
+scripts:
+  - type: afterResponse
+    code: pm.test("Status 409", function () { pm.response.to.have.status(409); });
+    language: text/javascript
+order: 4000

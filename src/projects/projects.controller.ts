@@ -18,25 +18,26 @@ import { UpdateProjectDto } from './dto/update-project.dto';
 @Controller('projects')
 export class ProjectsController {
   constructor(private readonly projectsService: ProjectsService) {}
-
-  @Post()
+  
+  // membuat endpoint untuk membuat project baru
+  @Post() 
   @ApiOperation({ summary: 'Membuat project baru' })
   create(@Body() dto: CreateProjectDto) {
     return this.projectsService.create(dto);
   }
-
+  // membuat endpoint untuk menampilkan semua project
   @Get()
   @ApiOperation({ summary: 'Menampilkan semua project' })
   findAll() {
     return this.projectsService.findAll();
   }
-
+  // membuat endpoint untuk menampilkan detail project berdasarkan id
   @Get(':id')
   @ApiOperation({ summary: 'Menampilkan detail project' })
   findOne(@Param('id', ParseIntPipe) id: number) {
     return this.projectsService.findOne(id);
   }
-
+  // membuat endpoint untuk mengubah project berdasarkan id
   @Patch(':id')
   @ApiOperation({ summary: 'Mengubah project' })
   update(
@@ -45,7 +46,7 @@ export class ProjectsController {
   ) {
     return this.projectsService.update(id, dto);
   }
-
+  // membuat endpoint untuk menghapus project berdasarkan id
   @Delete(':id')
   @ApiOperation({ summary: 'Menghapus project' })
   remove(@Param('id', ParseIntPipe) id: number) {
